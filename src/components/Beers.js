@@ -1,19 +1,21 @@
 import React from "react";
 import {connect} from "react-redux";
 import {BeerList} from "./BeersList";
-import {fetchData} from "../reducers/beersActions";
+import {search} from "../reducers/beersActions";
 
 export function Beers(props) {
-    const {data, status, fetchData} = props;
+    const {data, status, search} = props;
     return (
         <>
             <div className="App-inputs">
-                <button type="button" onClick={fetchData} disabled={status === "pending"}>
-                    Fetch Beers!
-                </button>
+                <input
+                    type="text"
+                    placeholder="Search beers"
+                    onChange={(evt) => search(evt.target.value)}
+                />
                 {status === "pending" && (
                     <span className="App-spinner">
-                        <img src={"/ajax-loader.gif"} />
+                        <img src={"/ajax-loader.gif"} alt="spinner"/>
                     </span>
                 )}
             </div>
@@ -26,4 +28,4 @@ export function Beers(props) {
     )
 }
 
-export default connect(state => state.beers, {fetchData})(Beers);
+export default connect(state => state.beers, {search})(Beers);
