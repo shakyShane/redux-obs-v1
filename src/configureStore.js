@@ -2,19 +2,18 @@ import {createStore, combineReducers, applyMiddleware, compose} from "redux";
 import {appReducer} from "./reducers/appReducer";
 
 import {combineEpics, createEpicMiddleware} from "redux-observable";
-import {of} from "rxjs";
-import {delay} from "rxjs/operators";
-
-const epic1 = () => of({type: "SET_NAME", payload: "Sally"}).pipe(delay(2000));
+import {fetchBeersEpic} from "./epics/fetchBeers";
+import {beersReducers} from "./reducers/beersReducers";
 
 export function configureStore() {
 
-    const rootEpic = combineEpics(epic1);
+    const rootEpic = combineEpics(fetchBeersEpic);
 
     const epicMiddleware = createEpicMiddleware();
 
     const rootReducer = combineReducers({
-        app: appReducer
+        app: appReducer,
+        beers: beersReducers
     });
 
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
