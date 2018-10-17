@@ -1,3 +1,11 @@
 export function appReducer(state = {name: "Shane"}, action) {
-    return state;
+    switch (action.type) {
+        case "SET_NAME": {
+            return {
+                ...state,
+                name: action.payload
+            }
+        }
+        default: return state;
+    }
 }
