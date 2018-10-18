@@ -3,6 +3,7 @@ export const FETCH_FAILED = "FETCH_FAILED";
 export const SET_STATUS = "SET_STATUS";
 export const FETCH_DATA = "FETCH_DATA";
 export const SEARCH = "SEARCH";
+export const CANCEL = "CANCEL";
 
 export function fetchFulfilled(beers) {
     return {
@@ -28,6 +29,12 @@ export function setStatus(status) {
 export function fetchData() {
     return {
         type: FETCH_DATA
+    }
+}
+
+export function cancel() {
+    return {
+        type: CANCEL
     }
 }
 
