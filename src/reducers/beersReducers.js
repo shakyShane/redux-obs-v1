@@ -1,4 +1,4 @@
-import {CANCEL, FETCH_FAILED, FETCH_FULFILLED, SET_STATUS} from "./beersActions";
+import {RESET, FETCH_FAILED, FETCH_FULFILLED, SET_STATUS} from "./beersActions";
 
 const initialState = {
     data: [],
@@ -14,7 +14,7 @@ export function beersReducers(state = initialState, action) {
                 status: action.payload,
             }
         }
-        case CANCEL: {
+        case RESET: {
             return {
                 ...state,
                 status: "idle",
