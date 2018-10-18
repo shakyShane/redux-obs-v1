@@ -42,6 +42,7 @@ ul {
 .App-inputs input {
   margin: 0;
   padding: 0;
+  margin-left: 10px;
   /*height: 40px;*/
 }
 
