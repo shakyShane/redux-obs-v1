@@ -1,11 +1,11 @@
 import React from "react";
 import {connect} from "react-redux";
 import {BeerList} from "./BeersList";
-import {cancel, search} from "../reducers/beersActions";
+import {cancel, random, search} from "../reducers/beersActions";
 import {setConfig} from "../reducers/configActions";
 
 export function Beers(props) {
-    const {data, messages, status, search, cancel, config, setConfig} = props;
+    const {data, messages, status, random, cancel, config, setConfig} = props;
     return (
         <>
             <div className="App-inputs">
@@ -17,11 +17,9 @@ export function Beers(props) {
                         return <option key={value} value={value}>{value} results</option>
                     })}
                 </select>
-                <input
-                    type="text"
-                    placeholder="Search beers"
-                    onChange={(evt) => search(evt.target.value)}
-                />
+                <button type="button" onClick={random}>
+                    Random
+                </button>
                 {status === "pending" && (
                     <>
                     <button type="button" onClick={cancel}>Cancel</button>
@@ -52,4 +50,4 @@ function mapState(state) {
     }
 }
 
-export default connect(mapState, {search, cancel, setConfig})(Beers);
+export default connect(mapState, {search, cancel, setConfig, random})(Beers);
