@@ -58,4 +58,29 @@ it("produces correct actions (error)", function() {
         })
     })
 });
+it("produces correct actions (reset)", function() {
+    const testScheduler = new TestScheduler((actual, expected) => {
+        expect(actual).toEqual(expected);
+    });
+
+    testScheduler.run(({ hot, cold, expectObservable }) => {
+        const action$ = hot('a 500ms -b', {
+            a: search("ship"),
+            b: cancel()
+        });
+        const state$ = of({
+            config: initialState
+        });
+        const dependencies = {
+            getJSON: (url) => {
+                return cold('---a')
+            }
+        };
+        const output$ = fetchBeersEpic(action$, state$, dependencies);
+        expectObservable(output$).toBe('500ms a-b', {
+            a: setStatus("pending"),
+            b: reset()
+        })
+    })
+});
 
