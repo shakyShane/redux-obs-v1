@@ -1,4 +1,3 @@
-import {ajax} from "rxjs/ajax";
 import {catchError, debounceTime, filter, map, mapTo, pluck, switchMap, withLatestFrom} from "rxjs/operators";
 import {SEARCH, fetchFulfilled, setStatus, fetchFailed, CANCEL, reset} from "../reducers/beersActions";
 import {ofType} from "redux-observable";
@@ -7,7 +6,7 @@ import {concat, fromEvent, of, merge, race} from "rxjs";
 const search = (apiBase, perPage, term) =>
     `${apiBase}?beer_name=${encodeURIComponent(term)}&per_page=${perPage}`;
 
-export function fetchBeersEpic(action$, state$) {
+export function fetchBeersEpic(action$, state$, { getJSON }) {
     return action$.pipe(
         ofType(SEARCH),
         debounceTime(500),
@@ -15,7 +14,7 @@ export function fetchBeersEpic(action$, state$) {
         withLatestFrom(state$.pipe(pluck("config"))),
         switchMap(([{payload}, config]) => {
 
-            const ajax$ = ajax.getJSON(search(config.apiBase, config.perPage, payload)).pipe(
+            const ajax$ = getJSON(search(config.apiBase, config.perPage, payload)).pipe(
                 map(resp => fetchFulfilled(resp)),
                 catchError(err => {
                     return of(fetchFailed(err.response.message));
