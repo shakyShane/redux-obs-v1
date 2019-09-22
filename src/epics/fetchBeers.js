@@ -1,5 +1,5 @@
 import {ajax} from "rxjs/ajax";
-import {debounceTime, map, switchMap} from "rxjs/operators";
+import {debounceTime, filter, map, switchMap} from "rxjs/operators";
 import {SEARCH, fetchFulfilled, setStatus} from "../reducers/beersActions";
 import {ofType} from "redux-observable";
 import {concat, of} from "rxjs";
@@ -11,6 +11,7 @@ export function fetchBeersEpic(action$) {
     return action$.pipe(
         ofType(SEARCH),
         debounceTime(500),
+        filter(({payload}) => payload.trim() !== ""),
         switchMap(({payload}) => {
             return concat(
                 of(setStatus("pending")),
