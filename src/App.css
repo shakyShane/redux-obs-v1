@@ -62,6 +62,10 @@ ul {
   margin: 0;
 }
 
+.App-messages {
+  padding: 1em;
+}
+
 .List {
 
   padding-left: 1em;
