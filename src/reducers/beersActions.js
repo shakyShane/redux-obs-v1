@@ -3,6 +3,7 @@ export const FETCH_FAILED = "FETCH_FAILED";
 export const SET_STATUS = "SET_STATUS";
 export const FETCH_DATA = "FETCH_DATA";
 export const SEARCH = "SEARCH";
+export const RANDOM = "RANDOM";
 export const CANCEL = "CANCEL";
 export const RESET = "RESET";
 
@@ -49,5 +50,11 @@ export function search(input) {
     return {
         type: SEARCH,
         payload: input
+    }
+}
+
+export function random() {
+    return {
+        type: RANDOM
     }
 }
